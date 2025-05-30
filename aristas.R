@@ -100,11 +100,12 @@ print(alpha_Habilidades_interpersonales)
 alpha_Habilidades_intrapersonales <- psych::alpha(datos[, unlist(Habilidades_intrapersonales)], check.keys = TRUE)
 print(alpha_Habilidades_intrapersonales)
 
-#----Graficar las dimensiones----
-# Distribución de la dimensión Motivación y autorregulación
-ggplot(datos, aes(x = Motivacion_y_autorregulacion)) +
-  geom_histogram(binwidth = 0.5, fill = "blue", color = "black", alpha = 0.7) +
-  labs(title = "Distribución de Motivación y Autorregulación",
-       x = "Motivación y Autorregulación",
-       y = "Frecuencia") +
-  theme_minimal()
+# Análisis factorial exploratorio (si quieres validar estructura interna)
+fa.parallel(datos[, unlist(Motivacion_y_autorregulacion)], fa="pc", n.iter=100)
+fa(datos[, unlist(Motivacion_y_autorregulacion)], nfactors=1, rotate="none")
+
+fa.parallel(datos[, unlist(Habilidades_interpersonales)], fa="pc", n.iter=100)
+fa(datos[, unlist(Habilidades_interpersonales)], nfactors=1, rotate="none")
+
+fa.parallel(datos[, unlist(Habilidades_intrapersonales)], fa="pc", n.iter=100)
+fa(datos[, unlist(Habilidades_intrapersonales)], nfactors=1, rotate="none")
