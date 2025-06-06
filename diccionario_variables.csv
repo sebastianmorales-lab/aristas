@@ -1,0 +1,20 @@
+Variable,Descripcion,Tipo.de.variable,Valores
+CentroCodigoDes,Identificador del centro educativo,numérica,19---67127
+GrupoCodigoDes,Identificador del grupo,numérica,3915444---4487724
+AlumnoCodigoDes,Identificador del alumno,numérica,380---18629386
+MdeoInt,Región (cadena),categórica,"Interior, Montevideo"
+Region,Región (numérica) 1 Montevideo 2 Interior,numérica,1---2
+Categoria,"Categoría de escuela PRIVADO ""Privada"", TC ""Tiempo completo"", PR-HP ""Práctica y habilitada de práctica"", UC ""Urbana común"", AP ""Aprender"", RC ""Rural"", TE ""Tiempo extendido""",categórica,"AP, UC, TC, PR-HP, PRIVADO, RC, TE"
+SECTOR,Sector al que pertenece la escuela,numérica,1---2
+ContextoANEP,"Contexto socioeconómico y cultural del centro, definido por la ANEP",categórica,"Quintil 1, Quintil 2, Quintil 3, Quintil 4, Quintil 5, PRIVADO"
+ESCS_Centro_cat,Contexto socioeconómico y cultural centro en 5 categorías,categórica,"Q1,Q2,Q3,Q4,Q5"
+Concurre,Asistencia a clase reportada por el referente del grupo,categórica,"Asiste habitualmente, Asiste poco, todas las semanas falta algunos días, Asiste muy poco, aproximadamente 1 vez cada 15 días, Sin datos"
+EDAD,Edad del alumno (registro administrativo),numérica,10---15
+AlumnoGenero,Sexo del alumno (registro administrativo),categórica,"M, F"
+extraedad,Años de extraedad del alumno,categórica,"0,1,2+ "
+ESCS_Alumno_cat,Estatus socioeconómico y cultural del estudiante en 5 categorías,categórica,"Q1, Q2, Q3, Q4, Q5"
+Niveles_LEN,Nivel de desempeño en lectura,categórica,"N1, N2, N3, N4, N5"
+Niveles_MAT,Nivel de desempeño en matemática,categórica,"N1, N2, N3, N4, N5"
+Motivacion_y_autorregulacion,Dimension: Motivacion_y_autorregulacion,numérica,13---64
+Habilidades_interpersonales,Dimension: Habilidades_interpersonales,numérica,11---44
+Habilidades_intrapersonales,Dimension: Habilidades_intrapersonales,numérica,7---44
