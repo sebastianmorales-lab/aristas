@@ -4,6 +4,10 @@
 
 library(psych)
 
+invertir_puntaje = function(valor,min_val=1,max_val=4) {
+  return (max_val - valor+min_val)
+}
+
 invertir_items <- function(datos, items_invertidos, min_val = 1, max_val = 4) {
   # Solo selecciona las columnas a invertir
   datos_a_invertir <- datos[, items_invertidos, drop = FALSE]
