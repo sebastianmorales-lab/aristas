@@ -76,8 +76,10 @@ suma_Habilidades_interpersonales[rowSums(!is.na(datos[, unlist(Habilidades_inter
 # Calculo la suma de la dimensión Habilidades intrapersonales
 suma_Habilidades_intrapersonales <- rowSums(datos[, unlist(Habilidades_intrapersonales)], na.rm = TRUE)
 suma_Habilidades_intrapersonales[rowSums(!is.na(datos[, unlist(Habilidades_intrapersonales)])) == 0] <- NA
+
 #----Calculo las dimensiones promediando los items----
-# Calculo la dimensión Motivación y autorregulación
+
+# Calculo la dimensión Motivación y autorregulación (promediando los items)
 dim_Motivacion_y_autorregulacion<- rowMeans(datos[, unlist(Motivacion_y_autorregulacion)], na.rm = TRUE)
 
 # Calculo la dimensión Habilidades interpersonales
@@ -159,3 +161,24 @@ fa(datos[, unlist(Habilidades_interpersonales)], nfactors=1, rotate="none")
 
 fa.parallel(datos[, unlist(Habilidades_intrapersonales)], fa="pc", n.iter=100)
 fa(datos[, unlist(Habilidades_intrapersonales)], nfactors=1, rotate="none")
+
+# --- Selecciona las columnas de interés para el nuevo dataframe ---
+# Excluye todas las columnas que empiezan con "ES", "BE" o "EST_W" seguidos de un número o cualquier carácter
+datos_final <- datos %>%
+  select(
+    -matches("^ES[0-9]"),
+    -matches("^BE[0-9]"),
+    -matches("^EST_W")
+  ) %>%
+  select( CentroCodigoDes, GrupoCodigoDes, AlumnoCodigoDes, MdeoInt,Region, Categoria,SECTOR,
+          ContextoANEP,ESCS_Centro_cat,Concurre, EDAD, AlumnoGenero, extraedad,
+          ESCS_Alumno_cat, Niveles_LEN,Niveles_MAT,
+          Motivacion_y_autorregulacion, Habilidades_interpersonales, Habilidades_intrapersonales)
+
+head(datos_final)
+
+# Imprimo las primeras filas del nuevo dataframe para verificar
+print(head(datos_final))
+
+# Guarda datos_final como un RData que solo contiene datos_final
+save(datos_final, file = "Aristas.RData")
