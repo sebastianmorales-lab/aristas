@@ -137,29 +137,29 @@ print(head(datos))
 # print(lapply(datos[, unlist(Habilidades_intrapersonales)], unique))
 
 # Grafico la distribución de las dimensiones
-  ggplot(datos, aes(x = Motivación_y_autorregulación)) +
-    geom_histogram(binwidth = 1, fill = "blue", color = "black", alpha = 0.7, na.rm = TRUE)
-    geom_density(aes(y = ..count..), color = "red", size = 1, adjust = 1, na.rm = TRUE) +
-    labs(title = "Distribucion de Motivacion y Autorregulacion",
-         x = "Motivacion y Autorregulacion",
-         y = "Frecuencia") +
-    theme_minimal()
+ggplot(datos, aes(x = Motivación_y_autorregulación)) +
+  geom_histogram(binwidth = 1, fill = "blue", color = "black", alpha = 0.7, na.rm = TRUE) +
+  geom_density(aes(y = ..count..), color = "red", size = 1, adjust = 1, na.rm = TRUE) +
+  labs(title = "Distribucion de Motivacion y Autorregulacion",
+       x = "Motivacion y Autorregulacion",
+       y = "Frecuencia") +
+  theme_minimal()
 
-  ggplot(datos, aes(x = Habilidades_interpersonales)) +
-    geom_histogram(binwidth = 1, fill = "green", color = "black", alpha = 0.7, na.rm = TRUE) +
-    geom_density(aes(y = ..count..), color = "red", size = 1, adjust = 1, na.rm = TRUE) +
-    labs(title = "Distribucion de Habilidades Interpersonales",
-         x = "Habilidades Interpersonales",
-         y = "Frecuencia") +
-    theme_minimal()
+ggplot(datos, aes(x = Habilidades_interpersonales)) +
+  geom_histogram(binwidth = 1, fill = "green", color = "black", alpha = 0.7, na.rm = TRUE) +
+  geom_density(aes(y = ..count..), color = "red", size = 1, adjust = 1, na.rm = TRUE) +
+  labs(title = "Distribucion de Habilidades Interpersonales",
+       x = "Habilidades Interpersonales",
+       y = "Frecuencia") +
+  theme_minimal()
 
-  ggplot(datos, aes(x = Habilidades_intrapersonales)) +
-    geom_histogram(binwidth = 1, fill = "purple", color = "black", alpha = 0.7, na.rm = TRUE) +
-    geom_density(aes(y = ..count..), color = "red", size = 1, adjust = 1, na.rm = TRUE) +
-    labs(title = "Distribucion de Habilidades Intrapersonales",
-         x = "Habilidades Intrapersonales",
-         y = "Frecuencia") +
-    theme_minimal()
+ggplot(datos, aes(x = Habilidades_intrapersonales)) +
+  geom_histogram(binwidth = 1, fill = "purple", color = "black", alpha = 0.7, na.rm = TRUE) +
+  geom_density(aes(y = ..count..), color = "red", size = 1, adjust = 1, na.rm = TRUE) +
+  labs(title = "Distribucion de Habilidades Intrapersonales",
+       x = "Habilidades Intrapersonales",
+       y = "Frecuencia") +
+  theme_minimal()
 
 
 # Calculo el apha de Cronbach para cada dimensión
@@ -189,12 +189,15 @@ datos_final <- datos %>%
     -matches("^BE[0-9]"),
     -matches("^EST_W")
   ) %>%
-  select(MdeoInt,Region, Categoria,SECTOR,
-          ContextoANEP,ESCS_Centro_cat,Concurre, EDAD, AlumnoGenero, extraedad,
-          ESCS_Alumno_cat, Niveles_LEN,Niveles_MAT,
-          Motivación_y_autorregulación, Habilidades_interpersonales, Habilidades_intrapersonales)
+  select(MdeoInt, Categoria, SECTOR,
+         ContextoANEP, ESCS_Centro_cat, Concurre, EDAD, AlumnoGenero, extraedad,
+         ESCS_Alumno_cat, Niveles_LEN, Niveles_MAT,
+         Motivación_y_autorregulación, Habilidades_interpersonales, Habilidades_intrapersonales)
+
+datos_final$SECTOR <- factor(datos_final$SECTOR, levels = c(1, 2), labels = c("Público", "Privado"))
 
 head(datos_final)
+
 
 
 # Guarda datos_final como un RData que solo contiene datos_final
