@@ -1,9 +1,10 @@
-# Script para generar un diccionario de variables a partir de datos_final y Diccionario_Alumnos-6to-HSE.xlsx
+# Script para generar un diccionario de variables simplificado: columnas 'var' y 'etiqueta'
 
 # Instalar y cargar paquetes necesarios
-
 if (!requireNamespace("readxl", quietly = TRUE)) install.packages("readxl")
 library(readxl)
+if (!requireNamespace("knitr", quietly = TRUE)) install.packages("knitr")
+library(knitr)
 
 # Cargar datos_final (si no está en el entorno)
 if (!exists("datos_final")) {
@@ -19,10 +20,10 @@ diccionario <- read_excel("Diccionario_Alumnos-6to-HSE.xlsx", col_names = TRUE)
 col_variable <- 1  # Número de columna con el nombre de la variable
 col_descripcion <- 4  # Número de columna con la descripción
 
-# Crear el data frame de salida
-variables_info <- data.frame(
-  Variable = names(datos_final),
-  Descripcion = sapply(seq_along(names(datos_final)), function(i) {
+# Crear el data frame de salida con columnas 'var' y 'etiqueta'
+diccionario_simple <- data.frame(
+  var = names(datos_final),
+  etiqueta = sapply(seq_along(names(datos_final)), function(i) {
     var <- names(datos_final)[i]
     # Para las últimas tres variables, colocar 'Dimension: <nombre_variable>'
     if (i > (length(names(datos_final)) - 3)) {
@@ -37,36 +38,18 @@ variables_info <- data.frame(
       }
     }
   }),
-  Tipo.de.variable = sapply(datos_final, function(x) class(x)[1]),
-  Valores = sapply(datos_final, function(x) {
-    if (is.numeric(x)) {
-      paste0(min(x, na.rm=TRUE), "---", max(x, na.rm=TRUE))
-    } else {
-      vals <- unique(x)
-      vals <- vals[!is.na(vals)]
-      # Reemplazar los ; por , en la concatenación
-      paste(gsub(";", ",", head(vals, 10)), collapse = ", ")
-    }
-  }),
   stringsAsFactors = FALSE
 )
 
-# Reemplazar los tipos de variable por los nombres solicitados
-tipo_map <- function(tipo) {
-  if (tipo %in% c("integer", "numeric")) {
-    return("numérica")
-  } else if (tipo == "factor") {
-    return("categórica")
-  } else {
-    return(tipo)
-  }
-}
-variables_info$Tipo.de.variable <- sapply(variables_info$Tipo.de.variable, tipo_map)
-
 # Convertir a UTF-8 explícitamente para evitar problemas de tildes
-variables_info[] <- lapply(variables_info, function(x) if(is.character(x)) enc2utf8(x) else x)
+diccionario_simple[] <- lapply(diccionario_simple, function(x) if(is.character(x)) enc2utf8(x) else x)
 
-# Guardar el resultado como CSV con codificación UTF-8 y separador coma
-write.csv(variables_info, "diccionario_variables.csv", row.names = FALSE, fileEncoding = "UTF-8", na = "")
 
-cat("Archivo diccionario_variables.csv generado correctamente.\n")
+# Guardar el resultado como RData y CSV
+save(diccionario_simple, file = "diccionario.RData")
+write.csv(diccionario_simple, "diccionario.csv", row.names = FALSE, fileEncoding = "UTF-8", na = "")
+
+cat("Archivo diccionario_simple.RData y diccionario.csv generados correctamente.\n")
+
+# Imprimir como tabla en consola
+kable(diccionario_simple, caption = "Diccionario simple de variables")

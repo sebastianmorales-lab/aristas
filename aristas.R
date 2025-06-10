@@ -202,3 +202,5 @@ head(datos_final)
 
 # Guarda datos_final como un RData que solo contiene datos_final
 save(datos_final, file = "Aristas.RData")
+
+cat("Archivo Aristas.RData generado correctamente.\n")
